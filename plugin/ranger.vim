@@ -68,7 +68,7 @@ function! s:VanillaRanger()
         exec 'bd'
     endif
     for name in names[0:]
-        exec 'edit! ' . fnameescape(name)
+        exec 'silent edit! ' . fnameescape(name)
         filetype detect
     endfor
     redraw!
