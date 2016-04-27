@@ -8,19 +8,18 @@ function! s:RangerJobHandler(job_id, data, event)
 endfunction
 
 function! s:FileHandler()
-  let buftoclose = bufnr('%')
-  let filetoedit = ' '
-
   if filereadable(s:temp)
-    let filetoedit = system('cat ' . s:temp)
+    let names = readfile(s:temp)
+    if empty(names)
+        return
+    endif
   endif
-
-  exec 'bd!' . buftoclose
-
-  if filereadable(filetoedit)
-    exec 'edit! ' . fnameescape(filetoedit)
-  endif
-
+  for name in names[0:]
+      if filereadable(name)
+          exec 'edit! ' . fnameescape(name)
+          filetype detect
+      endif
+  endfor
   redraw!
 endfunction
 
@@ -43,7 +42,6 @@ function! s:RangerChooser(dirname, commanded)
           \ 'on_stderr': function('s:RangerJobHandler'),
           \ 'on_exit': function('s:RangerJobHandler')
           \}
-
     if a:commanded == 1
       enew
     endif
@@ -60,13 +58,19 @@ endfunction
 
 function! s:VanillaRanger()
   exec 'silent !ranger --choosefile=' . s:fullfilename
-  let filename = system('cat ' . s:temp)
 
   if filereadable(s:temp)
-    exec 'edit ' . fnameescape(filename)
-  else
-    exec 'bd'
+    let names = readfile(s:temp)
+    if empty(names)
+        return
+    endif
   endif
+  for name in names[0:]
+      if filereadable(name)
+          exec 'edit! ' . fnameescape(name)
+          filetype detect
+      endif
+  endfor
   redraw!
 endfunction
 
