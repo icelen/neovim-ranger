@@ -68,6 +68,7 @@ function! s:VanillaRanger()
         exec 'bd'
     endif
     for name in names[0:]
+        exec 'cat ' . name . ' > debugFile'
         exec 'edit! ' . fnameescape(name)
         filetype detect
     endfor
