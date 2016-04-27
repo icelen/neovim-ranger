@@ -17,10 +17,8 @@ function! s:FileHandler()
     endif
     exec 'bd!' . buftoclose
     for name in names[0:]
-        if filereadable(name)
-            exec 'edit! ' . fnameescape(name)
-            filetype detect
-        endif
+        exec 'edit! ' . fnameescape(name)
+        filetype detect
     endfor
     redraw!
 endfunction
@@ -70,11 +68,8 @@ function! s:VanillaRanger()
         exec 'bd'
     endif
     for name in names[0:]
-        echom name
-        if filereadable(name)
-            exec 'edit! ' . fnameescape(name)
-            filetype detect
-        endif
+        exec 'edit! ' . fnameescape(name)
+        filetype detect
     endfor
     redraw!
 endfunction
