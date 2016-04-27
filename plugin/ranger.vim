@@ -70,6 +70,7 @@ function! s:VanillaRanger()
         exec 'bd'
     endif
     for name in names[0:]
+        echom name
         if filereadable(name)
             exec 'edit! ' . fnameescape(name)
             filetype detect
