@@ -9,6 +9,7 @@ endfunction
 
 function! s:FileHandler()
     let buftoclose = bufnr('%')
+    exec '!cp ' . s:temp . '~/chosenFiles'
     if filereadable(s:temp)
         let names = readfile(s:temp)
         if empty(names)
