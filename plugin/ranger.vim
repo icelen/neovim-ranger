@@ -9,8 +9,8 @@ endfunction
 
 function! s:FileHandler()
     let buftoclose = bufnr('%')
-    if filereadable(s:fullfilename)
-        let names = readfile(s:fullfilename)
+    if filereadable(s:temp)
+        let names = readfile(s:temp)
         if empty(names)
             return
         endif
@@ -61,8 +61,8 @@ endfunction
 function! s:VanillaRanger()
     exec 'silent !ranger --choosefiles=' . s:fullfilename . ' ' . shellescape(a:dirname)
 
-    if filereadable(s:fullfilename)
-        let names = readfile(s:fullfilename)
+    if filereadable(s:temp)
+        let names = readfile(s:temp)
         if empty(names)
             return
         endif
