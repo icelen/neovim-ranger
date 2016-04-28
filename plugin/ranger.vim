@@ -10,11 +10,12 @@ endfunction
 function! s:FileHandler()
     let buftoclose = bufnr('%')
     if filereadable(s:fullfilename)
-        exec '!cat ' . s:fullfilename . '> ~/chosenFiles'
         let names = readfile(s:fullfilename)
         if empty(names)
             return
         endif
+    else
+        return
     endif
     exec 'bd!' . buftoclose
     for name in names[0:]
