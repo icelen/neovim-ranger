@@ -68,7 +68,6 @@ function! s:VanillaRanger(dirname)
             return
         endif
     else
-        exec 'bd'
         return
     endif
     exec 'bd'
@@ -76,7 +75,7 @@ function! s:VanillaRanger(dirname)
         exec 'silent edit! ' . fnameescape(name)
         filetype detect
     endfor
-    redraw!
+    s:FormatBuffer()
 endfunction
 
 function! s:ExplorerWrapper(arg)
