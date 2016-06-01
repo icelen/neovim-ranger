@@ -61,19 +61,20 @@ endfunction
 
 function! s:VanillaRanger(dirname)
     exec 'silent !ranger --choosefiles=' . s:fullfilename . ' ' . shellescape(a:dirname)
-    if filereadable(s:temp)
-        let names = readfile(s:temp)
-        if empty(names)
-            return
-        endif
-    else
-        return
-    endif
-    exec 'bd'
-    for name in names[0:]
-        exec 'silent edit! ' . fnameescape(name)
-        filetype detect
-    endfor
+    call s:FileHandler()
+    " if filereadable(s:temp)
+    "     let names = readfile(s:temp)
+    "     if empty(names)
+    "         return
+    "     endif
+    " else
+    "     return
+    " endif
+    " exec 'bd'
+    " for name in names[0:]
+    "     exec 'silent edit! ' . fnameescape(name)
+    "     filetype detect
+    " endfor
     call s:FormatBuffer()
 endfunction
 
