@@ -53,12 +53,12 @@ function! s:RangerChooser(dirname, commanded)
         if exists(':terminal')
             call termopen('ranger --choosefiles=' . s:fullfilename. ' ' . shellescape(a:dirname), s:callbacks) | startinsert | call s:FormatBuffer()
         else
-            call s:VanillaRanger()
+            call s:VanillaRanger(a:dirname)
         endif
     endif
 endfunction
 
-function! s:VanillaRanger()
+function! s:VanillaRanger(dirname)
     exec 'silent !ranger --choosefiles=' . s:fullfilename . ' ' . shellescape(a:dirname)
 
     if filereadable(s:temp)
