@@ -85,6 +85,7 @@ function! s:ExplorerWrapper(arg)
     elseif (a:arg == '')
         call s:RangerChooser(getcwd(), 1)
     else
+    redraw!
     endif
 endfunction
 
