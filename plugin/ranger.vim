@@ -61,14 +61,16 @@ endfunction
 function! s:VanillaRanger(dirname)
     exec 'silent !ranger --choosefiles=' . s:fullfilename . ' ' . shellescape(a:dirname)
 
+    let buftoclose = bufnr('%')
     if filereadable(s:temp)
         let names = readfile(s:temp)
         if empty(names)
             return
         endif
     else
-        exec 'bd'
+        return
     endif
+    exec 'bd' . buftoclose
     for name in names[0:]
         exec 'silent edit! ' . fnameescape(name)
         filetype detect
