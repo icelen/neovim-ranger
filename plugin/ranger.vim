@@ -56,7 +56,7 @@ function! s:RangerChooser(dirname, commanded)
 endfunction
 
 function! s:VanillaRanger(dirname)
-    exec 'silent !ranger --choosefile=' . s:fullfilename
+    exec 'silent !ranger --choosefiles=' . s:fullfilename
     if filereadable(s:temp)
         let names = readfile(s:temp)
         for name in names[0:]
