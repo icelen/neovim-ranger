@@ -69,24 +69,15 @@ function! s:ETW(what, ...)
     endfor
 endfunction
 function! s:VanillaRanger(dirname)
-    exec 'silent !ranger --choosefiles=/tmp/chosenfile ' . shellescape(a:dirname)
-    let buftoclose = bufnr('%')
-    if filereadable('/tmp/chosenfile')
-        exec 'Ebufs ' . system('cat /tmp/chosenfile|tr "\n" " "')
+    exec 'silent !ranger --choosefile=' . s:fullfilename
+    let filename = system('cat ' . s:temp)
+
+    if filereadable(s:temp)
+        exec 'edit ' . fnameescape(filename)
     else
-        exec 'bd!' . buftoclose
+        exec 'bd'
     endif
-    " if filereadable(s:temp)
-    "     let names = readfile(s:temp)
-    "     for name in names[0:]
-    "         exec 'edit! ' . fnameescape(name)
-    "         filetype detect
-    "     endfor
-    " else
-    "     exec 'bd!' . buftoclose
-    " endif
-    call system('rm /tmp/chosenfile')
-    call s:FormatBuffer()
+    redraw!
 endfunction
 
 function! s:ExplorerWrapper(arg)
