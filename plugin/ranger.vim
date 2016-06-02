@@ -11,6 +11,7 @@ function! s:FileHandler()
     let buftoclose = bufnr('%')
     if filereadable(s:temp)
         let names = readfile(s:temp)
+        exec 'bd!' . buftoclose
         for name in names[0:]
             exec 'edit! ' . fnameescape(name)
             filetype detect
@@ -66,6 +67,7 @@ function! s:VanillaRanger(dirname)
     else
         exec 'bd!' . buftoclose
     endif
+    call s:FormatBuffer()
 endfunction
 
 function! s:ExplorerWrapper(arg)
