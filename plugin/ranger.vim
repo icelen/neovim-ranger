@@ -55,24 +55,16 @@ function! s:RangerChooser(dirname, commanded)
     endif
 endfunction
 
-command! -complete=file -nargs=+ Ebufs call s:ETW('e', <f-args>)
-function! s:ETW(what, ...)
-    for f1 in a:000
-        let files = glob(f1)
-        if files == ''
-            execute a:what . ' ' . escape(f1, '\ "''"')
-        else
-            for f2 in split(files, "\n")
-                execute a:what . '! ' . escape(f2, '\ "''"')
-            endfor
-        endif
-    endfor
-endfunction
 function! s:VanillaRanger(dirname)
     exec 'silent !ranger --choosefile=' . s:fullfilename
     let filename = system('cat ' . s:temp)
 
     if filereadable(s:temp)
+        let names = readfile(s:temp)
+        for name in names[0:]
+            exec 'edit! ' . fnameescape(name)
+            filetype detect
+        endfor
         exec 'edit ' . fnameescape(filename)
     else
         exec 'bd'
