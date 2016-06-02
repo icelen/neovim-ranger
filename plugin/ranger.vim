@@ -73,6 +73,8 @@ function! s:VanillaRanger(dirname)
     let buftoclose = bufnr('%')
     if filereadable('/tmp/chosenfile')
         exec 'Ebufs ' . system('cat /tmp/chosenfile|tr "\n" " "')
+    else
+        exec 'bd'
     endif
     " if filereadable(s:temp)
     "     let names = readfile(s:temp)
@@ -83,7 +85,6 @@ function! s:VanillaRanger(dirname)
     " else
     "     exec 'bd!' . buftoclose
     " endif
-    redraw!
     call system('rm /tmp/chosenfile')
     call s:FormatBuffer()
 endfunction
