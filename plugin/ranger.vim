@@ -19,7 +19,7 @@ function! s:FileHandler()
             filetype detect
         endfor
     endif
-    exec 'bd!' . buftoclose
+    " exec 'bd!' . buftoclose
     redraw!
 endfunction
 
