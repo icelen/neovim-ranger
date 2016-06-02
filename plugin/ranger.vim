@@ -11,15 +11,13 @@ function! s:FileHandler()
     let buftoclose = bufnr('%')
     if filereadable(s:temp)
         let names = readfile(s:temp)
-        if empty(names)
-            return
-        endif
         for name in names[0:]
             exec 'edit! ' . fnameescape(name)
             filetype detect
         endfor
+    else
+        exec 'bd!' . buftoclose
     endif
-    " exec 'bd!' . buftoclose
     redraw!
 endfunction
 
@@ -58,7 +56,15 @@ endfunction
 
 function! s:VanillaRanger(dirname)
     exec 'silent !ranger --choosefiles=' . s:fullfilename . ' ' . shellescape(a:dirname)
-    call s:FileHandler()
+    if filereadable(s:temp)
+        let names = readfile(s:temp)
+        for name in names[0:]
+            exec 'edit! ' . fnameescape(name)
+            filetype detect
+        endfor
+    else
+        exec 'bd!'
+    endif
     call s:FormatBuffer()
 endfunction
 
