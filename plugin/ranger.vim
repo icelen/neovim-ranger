@@ -63,7 +63,7 @@ function! s:ETW(what, ...)
             execute a:what . ' ' . escape(f1, '\ "''"')
         else
             for f2 in split(files, "\n")
-                execute a:what . ' ' . escape(f2, '\ "''"')
+                execute a:what . '! ' . escape(f2, '\ "''"')
             endfor
         endif
     endfor
@@ -83,6 +83,7 @@ function! s:VanillaRanger(dirname)
     " else
     "     exec 'bd!' . buftoclose
     " endif
+    redraw!
     call system('rm /tmp/chosenfile')
     call s:FormatBuffer()
 endfunction
