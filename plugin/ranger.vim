@@ -62,10 +62,9 @@ function! s:VanillaRanger(dirname)
             exec 'edit! ' . fnameescape(name)
             filetype detect
         endfor
-    else
-        exec 'bd!'
+    " else
+    "     exec 'bd!'
     endif
-    call s:FormatBuffer()
 endfunction
 
 function! s:ExplorerWrapper(arg)
