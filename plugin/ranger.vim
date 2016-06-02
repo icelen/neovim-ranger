@@ -74,7 +74,7 @@ function! s:VanillaRanger(dirname)
     if filereadable('/tmp/chosenfile')
         exec 'Ebufs ' . system('cat /tmp/chosenfile|tr "\n" " "')
     else
-        exec 'bd'
+        exec 'bd!' . buftoclose
     endif
     " if filereadable(s:temp)
     "     let names = readfile(s:temp)
