@@ -55,18 +55,33 @@ function! s:RangerChooser(dirname, commanded)
     endif
 endfunction
 
+command! -complete=file -nargs=+ Ebufs call s:ETW('e', <f-args>)
+function! s:ETW(what, ...)
+    for f1 in a:000
+        let files = glob(f1)
+        if files == ''
+            execute a:what . ' ' . escape(f1, '\ "''"')
+        else
+            for f2 in split(files, "\n")
+                execute a:what . ' ' . escape(f2, '\ "''"')
+            endfor
+        endif
+    endfor
+endfunction
 function! s:VanillaRanger(dirname)
-    exec 'silent !ranger --choosefiles=' . s:fullfilename . ' ' . shellescape(a:dirname)
+    exec 'silent !ranger --choosefiles=/tmp/chosenfile ' . shellescape(a:dirname)
     let buftoclose = bufnr('%')
-    if filereadable(s:temp)
-        let names = readfile(s:temp)
-        for name in names[0:]
-            exec 'edit! ' . fnameescape(name)
-            filetype detect
-        endfor
-    else
-        exec 'bd!' . buftoclose
-    endif
+    exec 'Ebufs ' . system('cat /tmp/chosenfile|tr "\n" " "')
+    " if filereadable(s:temp)
+    "     let names = readfile(s:temp)
+    "     for name in names[0:]
+    "         exec 'edit! ' . fnameescape(name)
+    "         filetype detect
+    "     endfor
+    " else
+    "     exec 'bd!' . buftoclose
+    " endif
+    call system('rm /tmp/chosenfile')
     call s:FormatBuffer()
 endfunction
 
