@@ -57,15 +57,12 @@ endfunction
 
 function! s:VanillaRanger(dirname)
     exec 'silent !ranger --choosefile=' . s:fullfilename
-    let filename = system('cat ' . s:temp)
-
     if filereadable(s:temp)
         let names = readfile(s:temp)
         for name in names[0:]
             exec 'edit! ' . fnameescape(name)
             filetype detect
         endfor
-        exec 'edit ' . fnameescape(filename)
     else
         exec 'bd'
     endif
