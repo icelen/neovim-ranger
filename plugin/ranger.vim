@@ -71,7 +71,9 @@ endfunction
 function! s:VanillaRanger(dirname)
     exec 'silent !ranger --choosefiles=/tmp/chosenfile ' . shellescape(a:dirname)
     let buftoclose = bufnr('%')
-    exec 'Ebufs ' . system('cat /tmp/chosenfile|tr "\n" " "')
+    if filereadable('/tmp/chosenfile')
+        exec 'Ebufs ' . system('cat /tmp/chosenfile|tr "\n" " "')
+    endif
     " if filereadable(s:temp)
     "     let names = readfile(s:temp)
     "     for name in names[0:]
